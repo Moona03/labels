@@ -1,0 +1,26 @@
+import os
+import numpy as np
+
+# Define the class labels
+class_labels = {'AD': 0, 'MCI': 1, 'CN': 2}
+
+# Get a list of all the class folders
+class_folders = [folder for folder in os.listdir('C:/Users/user/Desktop/DATA1/') if os.path.isdir('C:/Users/user/Desktop/DATA1/' + folder)]
+
+# Create an empty list to store the labels
+labels = []
+
+# Loop over the class folders and extract the labels for each image in each folder
+for class_folder in class_folders:
+    image_filenames = os.listdir('C:/Users/user/Desktop/DATA1/' + class_folder)
+    for image_filename in image_filenames:
+        label = class_labels[class_folder.split('/')[-1]]
+        labels.append(label)
+
+# Convert the list of labels to a NumPy array and save it to disk
+labels = np.array(labels)
+np.save('C:/Users/user/Desktop/DATA/labels.npy', labels)
+
+
+# Load the .npy file into a NumPy array
+all_labels = np.load('C:/Users/user/Desktop/DATA/labels.npy')
